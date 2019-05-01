@@ -13,6 +13,12 @@ def cropImage(image, i, deltaHeight):
     maxHeight = int((i+1)*deltaHeight)    
     croppedImg = image[minHeight:maxHeight]
     return croppedImg
+
+def reconstructImage(reconstructedImg, croppedThresh, i, deltaHeight):
+    minHeight = int(i*deltaHeight)
+    maxHeight = int((i+1)*deltaHeight)    
+    reconstructedImg[minHeight:maxHeight] = croppedThresh
+    return reconstructedImg
     
 def splitImg():
     cv2.namedWindow('Image Split', cv2.WINDOW_AUTOSIZE)
@@ -22,27 +28,37 @@ def splitImg():
     img = cv2.imread('../testImages/FLIRImages/thermal3.jpg')
 
     gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+    reconstructedImg = gray # possible that this needs to be copies some otherway
+    
     while True:
         threshConstant = cv2.getTrackbarPos('Threshold Constant', 'Image Split')
         threshVar = cv2.getTrackbarPos('Threshold Variable', 'Image Split')
         
-        #print(cv2.Size(img))
         height, width = img.shape[:2]
-        print('height: ' + str(height))            
-        print('width: ' + str(width))
-        croppedImg = img[0:int(height/2)]
+        #print('height: ' + str(height))            
+        #print('width: ' + str(width))
+        #croppedImg = img[0:int(height/2)]
         numOfSplits = 10
         deltaHeight = int(height/numOfSplits)
+        
         for i in range(0, numOfSplits):
-            cropped = cropImage(gray, i, deltaHeight)
+            minHeight = int(i*deltaHeight)
+            maxHeight = int((i+1)*deltaHeight)  
+            
+            croppedImg = cropImage(gray, i, deltaHeight)
+            
             thresholdValue = threshConstant + threshVar*i
-            ret,cropThresh = cv2.threshold(cropped,thresholdValue,255,cv2.THRESH_BINARY_INV)       
-            ret,grayThresh = cv2.threshold(cropped,thresholdValue,255,cv2.THRESH_BINARY_INV) 
+            ret,cropThresh = cv2.threshold(croppedImg,thresholdValue,255,cv2.THRESH_BINARY_INV)       
+            ret,grayThresh = cv2.threshold(gray,thresholdValue,255,cv2.THRESH_BINARY_INV) 
             
-            cv2.imshow(str("halved %d"%i), cropThresh)
+            
+            #reconstructedImg = reconstructImage(reconstructedImg, cropThresh, i, deltaHeight)
+            cv2.imshow('halved %d'%i, cropThresh)
             cv2.waitKey(10)
-            cv2.imshow('Image Split', grayThresh) 
+            reconstructedImg[minHeight:maxHeight] = cropThresh
+            #cv2.imshow('gray %d'%i, grayThresh) 
             
+        #cv2.imshow('Image Split', reconstructedImg)
         if cv2.waitKey(100) & 0xFF == ord('q'):
             cv2.destroyAllWindows()
             break
