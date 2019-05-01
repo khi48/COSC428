@@ -28,13 +28,14 @@ def splitImg():
     img = cv2.imread('../testImages/FLIRImages/thermal3.jpg')
 
     gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-    reconstructedImg = gray # possible that this needs to be copies some otherway
+    height, width = img.shape[:2]
+    reconstructedImg = np.zeros((height, width), np.uint8) # possible that this needs to be copies some otherway
     
     while True:
         threshConstant = cv2.getTrackbarPos('Threshold Constant', 'Image Split')
         threshVar = cv2.getTrackbarPos('Threshold Variable', 'Image Split')
         
-        height, width = img.shape[:2]
+        
         #print('height: ' + str(height))            
         #print('width: ' + str(width))
         #croppedImg = img[0:int(height/2)]
@@ -58,7 +59,7 @@ def splitImg():
             reconstructedImg[minHeight:maxHeight] = cropThresh
             #cv2.imshow('gray %d'%i, grayThresh) 
             
-        #cv2.imshow('Image Split', reconstructedImg)
+        cv2.imshow('Image Split', reconstructedImg)
         if cv2.waitKey(100) & 0xFF == ord('q'):
             cv2.destroyAllWindows()
             break
