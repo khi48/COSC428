@@ -24,7 +24,7 @@ def splitImg():
     cv2.createTrackbar('Dilation iterations', 'Image Split', 1, 100, nothing)  
     cv2.createTrackbar('Opening kernel size', 'Image Split', 1, 100, nothing)
     
-    img = cv2.imread('../testImages/FLIRImages/thermal2.jpg')
+    img = cv2.imread('../testImages/FLIRImages/thermal1.jpg')
     gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
     
     height, width = gray.shape[:2]
@@ -57,13 +57,17 @@ def splitImg():
             croppedImg = cropImage(gray, minHeight, maxHeight)
             
             thresholdValue = threshConstant + threshVar*i
+            
             ret,cropThresh = cv2.threshold(croppedImg,thresholdValue,255,cv2.THRESH_BINARY_INV)        
             
             reconstructedImg = reconstructImage(reconstructedImg, cropThresh, minHeight, maxHeight)
             
-            cv2.imshow('halved %d'%i, cropThresh)
+            #cv2.imshow('halved %d'%i, cropThresh)
             
         cv2.imshow('Image Split', reconstructedImg)
+        
+        #reconstructedImg = cv2.adaptiveThreshold(reconstructedImg, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C ,cv2.THRESH_BINARY_INV, 11, 1) 
+        #cv2.imshow('Image Split smoothed', reconstructedImg)
         
         #erosionKernel = np.ones((erosionKernelSize,erosionKernelSize),np.uint8)
         #erosion = cv2.erode(reconstructedImg, erosionKernel, iterations=erosionIterations)
@@ -102,15 +106,19 @@ def splitImg():
         detector = cv2.SimpleBlobDetector_create(params)
          
         # Detect blobs.
-        keypoints = detector.detect(opening)
-         
+        keyPoints = detector.detect(opening)
+        for keyPoint in keyPoints:
+            x = keyPoint.pt[0]
+            y = keyPoint.pt[1]
+            s = keyPoint.size
+            print("center y coordinate: " + str(y))
+        print("------------------------------")
         # Draw detected blobs as red circles.
         # cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS ensures the size of the circle corresponds to the size of blob
-        im_with_keypoints = cv2.drawKeypoints(opening, keypoints, np.array([]), (0,0,255), cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
+        im_with_keypoints = cv2.drawKeypoints(opening, keyPoints, np.array([]), (0,0,255), cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
 
         cv2.imshow('Blob Detection', im_with_keypoints)            
         
-        cv2.imshow('unaltered', img)
         if cv2.waitKey(100) & 0xFF == ord('q'):
             cv2.destroyAllWindows()
             break
