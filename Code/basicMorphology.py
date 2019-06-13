@@ -21,7 +21,7 @@ def morphology():
         morphIterations = cv2.getTrackbarPos('Iterations', 'Threshold Transform')
         
         ret,binaryThresh = cv2.threshold(gray,thresholdValue,255,cv2.THRESH_BINARY_INV)
-        # morphological features
+        # morphol ogical features
         kernel = np.ones((kernelSize,kernelSize),np.uint8)
         
         erosion = cv2.erode(binaryThresh, kernel, iterations=morphIterations)
@@ -38,9 +38,9 @@ def morphology():
         
         # Displaying Image
         width = 243 
-        height = int(width*(img.shape[0]/img.shape[1]))
+        height = int(width*(float(img.shape[0])/float(img.shape[1])))
         dim = (width, height)
-
+        print(dim)
         binaryThresh = cv2.resize(binaryThresh, dim)
         erosion = cv2.resize(erosion, dim)
         dilation = cv2.resize(dilation, dim)

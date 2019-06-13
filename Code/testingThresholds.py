@@ -10,8 +10,9 @@ def threshold():
 
     gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 
-    cv2.namedWindow('Threshold Transform', cv2.WINDOW_AUTOSIZE)
-    cv2.createTrackbar('Threshold value', 'Threshold Transform', 0, 255, nothing)
+    cv2.namedWindow('Image Split', cv2.WINDOW_AUTOSIZE)
+    cv2.createTrackbar('Threshold Constant', 'Image Split', 0, 255, nothing)
+    cv2.createTrackbar('Threshold Variable', 'Image Split', 0, 255, nothing)
 
     while True:
         thresholdValue = cv2.getTrackbarPos('Threshold value', 'Threshold Transform')

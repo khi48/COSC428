@@ -6,7 +6,7 @@ def nothing(x):
     pass
 
 def threshold():
-    img = cv2.imread('../testImages/FLIRImages/thermal3.jpg')
+    img = cv2.imread('../testImages/LeptonImages/A2_Monday13May_fullLecutre.png')
 
     gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 
@@ -30,9 +30,10 @@ def threshold():
         '''
         # img.shape[0] -> height   
         # img.shape[1] -> width
-        width = 243 
-        height = int(width*(img.shape[0]/img.shape[1]))
+        width = 235 # 235
+        height = int(width*float(img.shape[0])/float(img.shape[1]))
         dim = (width, height)
+        
 
         thresh1 = cv2.resize(thresh1, dim)
         thresh2 = cv2.resize(thresh2, dim)
@@ -42,7 +43,7 @@ def threshold():
         
         combined = np.concatenate((thresh1, thresh2, thresh3, thresh4, thresh5), axis=1)
         cv2.imshow('Threshold Transform', combined)     
-
+        cv2.imshow('Origional', img)  
         if cv2.waitKey(100) & 0xFF == ord('q'):
             cv2.destroyAllWindows()
             break

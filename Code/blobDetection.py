@@ -6,7 +6,7 @@ def nothing(x):
     pass
 
 def threshold():
-    img = cv2.imread('../testImages/FLIRImages/thermal3.jpg')
+    img = cv2.imread('../testImages/LeptonImages/A2_Monday13May_fullLecutre.png')
 
     gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 
@@ -26,8 +26,7 @@ def threshold():
         
         #print(erosionKernelSize)
         # thresholding
-        ret,thresh1 = cv2.threshold(gray,thresholdValue,255,cv2.THRESH_BINARY_INV)       
-        
+        ret,thresh1 = cv2.threshold(gray,thresholdValue,255,cv2.THRESH_BINARY_INV)               
         # morphology
         erosionKernel = np.ones((erosionKernelSize,erosionKernelSize),np.uint8)
         erosion = cv2.erode(thresh1, erosionKernel, iterations=erosionIterations)
@@ -47,7 +46,7 @@ def threshold():
         im_with_keypoints = cv2.drawKeypoints(opening, keypoints, np.array([]), (0,0,255), cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
 
         cv2.imshow('Blob Detection', im_with_keypoints)     
-        
+        cv2.imshow('Origional', img)     
 
         if cv2.waitKey(100) & 0xFF == ord('q'):
             height, width = img.shape[:2]

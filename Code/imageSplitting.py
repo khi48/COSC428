@@ -24,7 +24,7 @@ def splitImg():
     cv2.createTrackbar('Dilation iterations', 'Image Split', 1, 100, nothing)  
     cv2.createTrackbar('Opening kernel size', 'Image Split', 1, 100, nothing)
     
-    img = cv2.imread('../testImages/FLIRImages/thermal1.jpg')
+    img = cv2.imread('../testImages/LeptonImages/A2_Monday13May_fullLecutre.png')
     gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
     
     height, width = gray.shape[:2]
@@ -58,7 +58,7 @@ def splitImg():
             
             thresholdValue = threshConstant + threshVar*i
             
-            ret,cropThresh = cv2.threshold(croppedImg,thresholdValue,255,cv2.THRESH_BINARY_INV)        
+            ret,cropThresh = cv2.threshold(croppedImg,thresholdValue,255,cv2.THRESH_BINARY)        
             
             reconstructedImg = reconstructImage(reconstructedImg, cropThresh, minHeight, maxHeight)
             
@@ -117,7 +117,8 @@ def splitImg():
         # cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS ensures the size of the circle corresponds to the size of blob
         im_with_keypoints = cv2.drawKeypoints(opening, keyPoints, np.array([]), (0,0,255), cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
 
-        cv2.imshow('Blob Detection', im_with_keypoints)            
+        cv2.imshow('Blob Detection', im_with_keypoints)     
+        cv2.imshow('gray', gray)
         
         if cv2.waitKey(100) & 0xFF == ord('q'):
             cv2.destroyAllWindows()
