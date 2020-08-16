@@ -25,6 +25,6 @@ This problem was overcome by finding all the warm areas, and filtering these are
 
 The final method used for the person detection algorithm is outlined in the diagram below:
 <p align="center">
-	<img src="https://github.com/khi48/LectureAttendanceCV/blob/master/Documents/Lecture%20Theatre%20People%20Counting.pdf" alt="Image of thermal camera reading of lecture theatre">
+	<img src="https://github.com/khi48/LectureAttendanceCV/blob/master/testImages/Final%20Images/Algorithm%20State%20Diagram.png" alt="Image of thermal camera reading of lecture theatre">
 </p>
  
