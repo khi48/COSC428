@@ -10,14 +10,21 @@ Tracking students may also give the option to study how lecture attendance chang
 
 The final result was shown to accurately predict the lecture attendance with 96%-100% accuracy.
 
-![Image of thermal camera detecting students in lecture theatre](https://github.com/khi48/LectureAttendanceCV/blob/master/testImages/Final%20Images/finalContours.png)
+<p align="centre">
+	<img src="https://github.com/khi48/LectureAttendanceCV/blob/master/testImages/Final%20Images/finalContours.png" alt="Image of thermal camera detecting students in lecture theatre">
+</p>
 
 ## Method
 The initial infrared images show multiple hot spots for each person. For example, jerseys cover up the body, making it appear cool relative to the warm faces and hands, which don't appear to be connected. 
 
 This problem was overcome by finding all the warm areas, and filtering these areas by size. The larger areas are more likely to be people. As people at the back of the theatre are relatively smaller than people at the front, this area varied with height.
 
-![Image of thermal camera reading of lecture theatre](https://github.com/khi48/LectureAttendanceCV/blob/master/testImages/LeptonImages/A2_Monday13May_fullLecutre.png)
+<p align="centre">
+	<img src="https://github.com/khi48/LectureAttendanceCV/blob/master/testImages/LeptonImages/A2_Monday13May_fullLecutre.png" alt="Image of thermal camera reading of lecture theatre">
+</p>
 
 The final method used for the person detection algorithm is outlined in the diagram below:
+<p align="centre">
+	<img src="https://github.com/khi48/LectureAttendanceCV/blob/master/Documents/Lecture%20Theatre%20People%20Counting.pdf" alt="Image of thermal camera reading of lecture theatre">
+</p>
  
